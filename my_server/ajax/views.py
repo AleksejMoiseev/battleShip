@@ -7,11 +7,33 @@ from rest_framework.views import APIView
 
 from ajax.forms import CreateUserForm
 from ajax.serializers import *
-from ajax.models import Game, User
+from ajax.models import User as u
+from ajax.models import Game
 from rest_framework.permissions import AllowAny
 from django.views.generic import CreateView
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User as auth
+
+
+from rest_framework import authentication
+from rest_framework import exceptions
 
 from django.conf import settings
+
+
+class ExampleAuthentication(authentication.BaseAuthentication):
+    def authenticate(self, request):
+        username = request.META.get('HTTP_X_USERNAME')
+        if not username:
+            return None
+
+        try:
+            user = auth.objects.get(username=username)
+            print(user)
+        except auth.DoesNotExist:
+            raise exceptions.AuthenticationFailed('No such user')
+
+        return (user, None)
 
 # Create your views here.
 
@@ -25,11 +47,13 @@ class GameCreateView(generics.ListCreateAPIView):
     queryset = Game.objects.all()
 
 
-class UserCreateView(generics.ListCreateAPIView):
+
+class UserCreateView(generics.ListCreateAPIView, ExampleAuthentication):
     serializer_class = UserListSerializers
-    queryset = User.objects.all()
+    queryset = u.objects.all()
 
     def create(self, request, *args, **kwargs):
+        self.authenticate(request)
         # request.set_cookie(key='id', value=38)
         print(request.user)
         print(request.session)
@@ -38,9 +62,9 @@ class UserCreateView(generics.ListCreateAPIView):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         id_user = serializer.data['id']
-        request.session['id'] = id_user
-        print(request.session)
-        print(request.session['id'])
+        # request.session['id'] = id_user
+        # print(request.session)
+        # print(request.session['id'])
         headers['id'] = id_user
         response = Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         response.set_cookie(key='id', value=id_user)
@@ -69,7 +93,7 @@ class GameDetailView(APIView):
 
 class UserDestroy(generics.RetrieveDestroyAPIView):
     serializer_class = UserListSerializers
-    queryset = User.objects.all()
+    queryset = u.objects.all()
 
 
 def assign_const(request):
@@ -101,7 +125,7 @@ class CreateUserAndGame(generics.CreateAPIView):
         self.perform_create(serializer)
         id_game = serializer.data['id']
         game = Game.objects.get(id=id_game)
-        created_user = User.objects.create(name=name, game=game)
+        created_user = u.objects.create(name=name, game=game)
         headers = self.get_success_headers(serializer.data)
         headers['id_user'] = created_user.pk
         response = Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -111,7 +135,7 @@ class CreateUserAndGame(generics.CreateAPIView):
 
 class UpdateShip(generics.RetrieveUpdateAPIView):
     serializer_class = UserShipStatusUpdate
-    queryset = User.objects.all()
+    queryset = u.objects.all()
 
 
 def faire(request):
