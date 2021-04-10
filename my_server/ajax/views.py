@@ -118,6 +118,7 @@ def faire(request):
     print(request.user)
     print(request.data['coordinate'])
     response = HttpResponse(content="privet")
+    print("proba")
     return response
 
 
