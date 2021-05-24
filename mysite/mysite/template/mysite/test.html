@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}ПИШУ СВОЙ ШАБЛОН{% endblock %}
+
+{% block content %}
+<p>Сюда вставляю блок контент</p>
+<h1> current_first: {{  current_first }}</h1>
+{% endblock %}
+
+{% block footer %}
+<h2>Здесь описываю блог footer!</h2>
+<h2>request.path {{ path }}</h2>
+<h2>request.get_host() {{ get_host }}</h2>
+<h2>request.get_full_path() {{ get_full_path }}</h2>
+<h2>request.is_secure() {{ is_secure }}</h2>
+<h2>request.META {{ META }}</h2>
+
+
+
+
+
+{% endblock %}

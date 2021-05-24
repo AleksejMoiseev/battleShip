@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+<script>
+setTimeout(function(){ window.location.href = '{% url "auth_login" %}'; }, 5 * 1000);
+</script>
+
+<div class="static-wrap">
+    <div>
+        <div>{% trans 'Email confirmation was successful' %}</div>
+
+    </div>
+</div>
+

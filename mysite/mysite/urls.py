@@ -15,7 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .views import *
+from django.conf.urls import url
 
 urlpatterns = [
+    url(r"^test1/(\w*)/$", test1),
+    url(r"^test21/$", test2),
     path('admin/', admin.site.urls),
+    path('test2/', test2, name='django_registration_activation_immediately'),
+    path('test3/', test3),
+    path('test4/', test4),
+    path('test5/', test5),
+    path('test6/', test6),
+    path('test7/', test7),
+    path('test2/<int:pk>/', offset),
 ]
+

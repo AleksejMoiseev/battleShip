@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery </title>
+     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+     <style>
+         .c{
+             border-bottom: 1px dasheed black;
+         }
+
+    </style>
+</head>
+<body>
+  <h3>Задание 1
+Создать html-страницу со списком ссылок.
+Ссылки на внешние источники (которые начинаются с http://)
+необходимо подчеркнуть пунктиром.
+Искать такие ссылки в списке и устанавливать им дополнительные стили необходимо с помощью JS.</h3>
+   <ul>
+       <li><a href="">{{current_date}}</a></li>
+       <li><a href="">http://google.com</a></li>
+       <li><a href="">https://itstep.org</a></li>
+       <li><a href="">{{current_first}}</a></li>
+       <li><a href="">/images/cat.jpg</a></li>
+   </ul>
+<!--Тег {% include "HW1_proba.html" %}  позволяет включить сюда содержимое шаблона "HW1_proba.html"-->
+  {% include "HW1_proba.html" %}
+
+
+    <script>
+
+        var arrA = $("ul li a");
+        template = /^http/
+        for (let i of arrA){
+            str = i.innerText
+            i.style.textDecoration = "none";
+            if(template.test(str)){
+                i.style.borderBottom ="1px dashed";
+            }
+
+        }
+
+
+
+    </script>
+
+    <ul>
+        <h3>вывод списка значений </h3>
+        <li>{{athlete_list}}</li>
+        <h3>вывод каждого значения из списка </h3>
+        {% for lis in athlete_list  %}
+        <li>"Знчение LIS" {{lis | upper}}  накладываем фильтр upper </li>
+        {% if forloop.first  %}
+            <h2>Получено значение forloop.first==True</h2>
+        {% endif %}
+        <p>Здесь значение параметра forloop.counter =  {{ forloop.counter }}</p>
+        <p>Здесь значение параметра forloop.counter0 = {{ forloop.counter0 }}</p>
+        <p>Здесь значение параметра forloop.revcounter = {{ forloop.revcounter }}</p>
+        {% if forloop.last  %}
+            <h2>Получено значение forloop.last==True</h2>
+        {% endif %}
+        {% ifequal lis 'qqqqqq' %}
+            <h1>Ура тег ifequal вывел равные значения  </h1>
+            {% endifequal %}
+        {% endfor %}
+
+    </ul>
+
+
+    </body>
+    </html>
