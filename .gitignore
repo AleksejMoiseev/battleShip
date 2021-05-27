@@ -1,3 +1,6 @@
 /my_server/my_server/__pycache__/
-/.idea/
+.idea/
 /env1/
+__pycache__/
+../.idea/
+

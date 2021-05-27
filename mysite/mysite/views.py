@@ -6,6 +6,9 @@ from django.urls import reverse_lazy, reverse
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect
 from django.views.generic import RedirectView
+import time
+
+from .form import MyForm
 import os
 
 
@@ -93,3 +96,53 @@ def test7(request):
     })
     html = t.render(context=context)
     return HttpResponse(html)
+
+
+def test8(request):
+    current_date = request.GET
+    context = {
+        'current_date': request.GET,
+    }
+    template_name = 'form.html'
+    # return render(request=request, template_name=template_name, context=locals())
+    # return HttpResponse("<h1 style='color:red'>Я Могу вывести Что угодно</h1>")
+    t = loader.get_template(template_name=template_name)  # загрузка кода шаблона и возврат класса TEMPLATE
+    html = t.render(context=context)  #  Прокидывание контекста
+    return HttpResponse(html)
+
+
+def test9(request):
+    current_date = request.POST  # получаем словарь содержащий в себе данные отправленные пользователем
+    template_name = 'form1.html'
+    return render(request=request, template_name=template_name, context=locals())
+
+
+def test10(request):  # использование класса формы для отображения формы
+    template_name = 'form2.html'
+    data = dict()
+    if request.method == 'POST':
+        form = MyForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data  # метод cleaned_data позволяет получить данные из формы в виде словаря {}
+            # time.sleep(3)
+            # return redirect(to='django_registration_activation_immediately')
+    else:
+        form = MyForm(initial={'message': 'Введите сюда чего нибудь!'})  # Позволяет сюда ывводить данные которые будут показаны при первом вызове
+
+    context = {
+        'form': form,
+        'my_value': data
+    }
+    return render(request=request, template_name=template_name, context=context)
+
+
+def test11(request, year, month):
+    template_name = 'test11.html'
+    year = year
+    month = month
+    return render(request=request, template_name=template_name, context=locals(), status=201)
+
+
+def test12(request, template_name):
+    data = 'This is value'
+    return render(request=request, template_name=template_name, context=locals(), status=201)

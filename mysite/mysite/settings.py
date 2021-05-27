@@ -14,8 +14,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Переменная которая показывает откуда берутся шаблоны
-TEMPLATE_DIR = BASE_DIR.joinpath('mysite/template/mysite')
-
+TEMPLATE_DIR = BASE_DIR.joinpath('mysite/template/mysite') # показываем путь и закидываем его в templates_dir ниже
+# по умолчанию шаблоны ищутся в папке templates находящейся в приложении
 
 
 
@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -62,7 +62,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
+        'DIRS': [TEMPLATE_DIR, ],  # Сюда закидываем список адресов откуда хотим считывать шаблоны
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

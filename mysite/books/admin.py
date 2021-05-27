@@ -1,5 +1,5 @@
 from django.contrib import admin
-from books.models import Publisher
+from books.models import *
 
 
 # Register your models here.
@@ -14,6 +14,8 @@ class PublisherAdmin(admin.ModelAdmin):
     # raw_id_fields = ('name', )  # Сложный фильтр для поля Forenkey
 
 
-
+@admin.register(Student)
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('year_in_school',)
 # admin.site.register(Publisher)  # Регистрация модели в админ панеле
 
