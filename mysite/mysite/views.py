@@ -8,11 +8,13 @@ from django.http import HttpResponseRedirect
 from django.views.generic import RedirectView
 import time
 
+from django.http import *
+
 from .form import MyForm
 import os
 
 
-T =os.path.dirname(__file__)
+T =os.path.dirname(__file__)  # показывает путь to parent directory
 
 # Через хост прокидываем параметр в функцию параметр a: http://example.com:9000/test1/5/
 
@@ -46,7 +48,7 @@ def test2(request):
 
 def test3(request):
     template = 'template2.html'
-    context = {'current_date': 'http://I am go to walk Mouscow'}
+    context = {'current_date': T}
     return render(request=request, template_name=template, context=context, status=200)
 
 
@@ -95,7 +97,11 @@ def test7(request):
         "name": "Alex",
     })
     html = t.render(context=context)
-    return HttpResponse(html)
+    # return HttpResponse(html)
+
+    # return HttpResponse("Необходимо авторизоваться",  status=401)
+    # raise Http404("No MyModel matches the given query.")
+    return render(request=request, template_name='error_404.html', status=404)
 
 
 def test8(request):
@@ -146,3 +152,19 @@ def test11(request, year, month):
 def test12(request, template_name):
     data = 'This is value'
     return render(request=request, template_name=template_name, context=locals(), status=201)
+
+def test14(request, order):
+    print(order)
+    return  HttpResponse(f'oreder; {order}', status=200)
+
+def test15(request):
+    t = Template("<html><body><h1>{{name}} </h1> </body></html>")
+    context = Context({
+        "name": "Alex",
+    })
+    html = t.render(context=context)
+    return HttpResponse(html, status=200)
+
+    # return HttpResponse("Необходимо авторизоваться",  status=401)
+
+

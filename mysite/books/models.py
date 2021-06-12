@@ -15,7 +15,7 @@ class ManagerPublisher(models.Manager):
     def my_method(self):  # Полностью пишем запрос в БД  на основании SQL
         """
         Результат выполнения функции выдает список данных сами формируем QVERY !!!
-        [(1, 'Apress', '2855 Telegraph Avenue', 'Berkeley', 'CA', 'http://www.apress.com/', 'U.S.A.'),
+        [(1, ''Apress'', '2855 Telegraph Avenue', 'Berkeley', 'CA', 'http://www.apress.com/', 'U.S.A.'),
         (2, 'dany', '2855 Telegraph Avenue', 'Moucow', 'CA', 'http://www.apress.com/', 'U.S.A.'),
         (3, 'Aleksei', 'Mouscou', 'Mouscou', 'Mouscou', 'http://127.0.0.1:1111/admin/books/publisher/add/', 'Mouscou')]
 
@@ -70,3 +70,17 @@ class Student(models.Model):
 
     def is_upperclass(self):
         return self.year_in_school in {self.JUNIOR, self.SENIOR}
+
+
+class AccessByToken(models.Model):
+
+    ACTIVE = 1
+    NOT_ACTIVE = 0
+
+    IS_ROTTEN = [
+        (ACTIVE, "active"),
+        (NOT_ACTIVE, 'rotten')
+    ]
+
+    user = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    is_active = models.SmallIntegerField( choices=IS_ROTTEN, default=NOT_ACTIVE, verbose_name="Состояние")

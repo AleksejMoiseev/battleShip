@@ -38,6 +38,9 @@ urlpatterns = [
     url(r"^test12/$", test12, {'template_name': "test12.html"}),
     path('test13/', test12, {'template_name': "test13.html"}),
     path('test2/<int:pk>/', offset),
+    url(r'^test14/(?P<order>\[order]*)/', test14),
+    url(r'^test15/', test15),
+
     # url(r"^test11/(\d*)/(\d*)/$", test11), # Передача в функцию позиционных аргументов
 ]
 

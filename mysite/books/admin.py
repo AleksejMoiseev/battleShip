@@ -1,8 +1,10 @@
 from django.contrib import admin
-from books.models import *
 
 
 # Register your models here.
+from books.models import *
+
+
 
 @admin.register(Publisher)  # регитстрация через декоратор
 class PublisherAdmin(admin.ModelAdmin):
@@ -18,4 +20,8 @@ class PublisherAdmin(admin.ModelAdmin):
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('year_in_school',)
 # admin.site.register(Publisher)  # Регистрация модели в админ панеле
+
+@admin.register(AccessByToken)
+class AccessByTokenAdmin(admin.ModelAdmin):
+    list_display = ('is_active', 'user')
 

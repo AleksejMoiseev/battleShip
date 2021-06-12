@@ -10,7 +10,8 @@ class MyForm(forms.Form):
         message = data['message']
         try:
             if int(message) > 100:
-                raise forms.ValidationError("Крутяк вызвана хорошая ошибка")
+                raise forms.ValidationError("Крутяк вызвана хорошая ошибка")  # Образец как нужно рейзить ошибки при
+                # валидации форм, ошибки возвращаюся пользователю
             return message
         except ValueError:
             raise forms.ValidationError("А Ну  давай корректные данные")

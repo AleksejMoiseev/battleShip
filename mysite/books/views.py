@@ -20,7 +20,7 @@ def test7(request):
 def test1(request):
     template = Template('{{ year }}: {{ month }}')
     # t = Loader.get_template(template_name='test11.html') не разобрался с загрузчиками
-    context = RequestContext(request=request, dict_={}, processors=[custom_context])
+    context = RequestContext(request=request, dict_={}, processors=[custom_context]) #Позволяет прокинуть кастомный контекст
     html = template.render(context=context)
     return HttpResponse(html)
 
