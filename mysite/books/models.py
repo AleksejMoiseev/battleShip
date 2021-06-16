@@ -84,3 +84,19 @@ class AccessByToken(models.Model):
 
     user = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     is_active = models.SmallIntegerField( choices=IS_ROTTEN, default=NOT_ACTIVE, verbose_name="Состояние")
+
+
+class ByToken(models.Model):
+    ACTIVE = 1
+    NOT_ACTIVE = 0
+
+    IS_ROTTEN = [
+        (ACTIVE, "active"),
+        (NOT_ACTIVE, 'rotten')
+    ]
+
+    user = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    token_key = models.CharField(max_length=50)
+    is_active = models.SmallIntegerField(choices=IS_ROTTEN, default=NOT_ACTIVE, verbose_name="Состояние")
+    date_of_creation = models.DateField(auto_now_add=True)
+    update_date = models.DateField(auto_now=True)

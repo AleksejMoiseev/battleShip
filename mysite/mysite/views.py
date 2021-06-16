@@ -146,6 +146,7 @@ def test11(request, year, month):
     template_name = 'test11.html'
     year = year
     month = month
+    test = 'Value'
     return render(request=request, template_name=template_name, context=locals(), status=201)
 
 

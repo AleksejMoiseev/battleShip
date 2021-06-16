@@ -25,3 +25,7 @@ class StudentAdmin(admin.ModelAdmin):
 class AccessByTokenAdmin(admin.ModelAdmin):
     list_display = ('is_active', 'user')
 
+@admin.register(ByToken)
+class AccessByTokenAdmin(admin.ModelAdmin):
+    list_display = ('user', 'token_key', 'is_active', 'date_of_creation', 'update_date')
+
