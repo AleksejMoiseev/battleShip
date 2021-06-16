@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}csrftoken{% endblock %}
+
+{% block content %}
+<p>Сюда вставляю блок контент</p>
+<h1> current_first: {{  current_first }}</h1>
+{% endblock %}
+
+{% block footer %}
+{% csrf_token %}
+
+<script>
+
+<!--  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;-->
+<!--  console.log (csrftoken);-->
+
+</script>
+
+
+
+<h2>csrftoken  : {{ csrftoken }}</h2>
+<h2>sessionid  : {{ sessionid }}</h2>
+
+
+
+
+
+{% endblock %}

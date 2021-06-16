@@ -1,18 +1,13 @@
 import datetime
-from django.http import HttpResponse
-from django.template import Template, Context, loader
-from django.shortcuts import render, redirect, resolve_url
-from django.urls import reverse_lazy, reverse
-from django.template.loader import render_to_string
-from django.http import HttpResponseRedirect
-from django.views.generic import RedirectView
-import time
-
-from django.http import *
-
-from .form import MyForm
 import os
 
+from django.http import *
+from django.shortcuts import render
+from django.template import Template, Context, loader
+from django.template.loader import render_to_string
+from django.urls import reverse
+
+from .form import MyForm
 
 T =os.path.dirname(__file__)  # показывает путь to parent directory
 
@@ -37,7 +32,7 @@ def test2(request):
     try:
         template = loader.get_template(template_name=template_str)
     except loader.TemplateDoesNotExist:
-        print('ничего нет')
+        return HttpResponseBadRequest
 
     context = {
         'current_date': now,
@@ -77,7 +72,6 @@ def test5(request):
         is_secure = "FALSE"
     META = request.META                      #  это словарь Python, содержащий все HTTP-заголовки данного запроса
     return render(request=request, template_name=template, context=locals(), status=200)
-
 
 
 def test6(request):
@@ -154,9 +148,11 @@ def test12(request, template_name):
     data = 'This is value'
     return render(request=request, template_name=template_name, context=locals(), status=201)
 
+
 def test14(request, order):
     print(order)
-    return  HttpResponse(f'oreder; {order}', status=200)
+    return HttpResponse(f'oreder; {order}', status=200)
+
 
 def test15(request):
     t = Template("<html><body><h1>{{name}} </h1> </body></html>")
