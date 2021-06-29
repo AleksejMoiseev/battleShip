@@ -2,6 +2,18 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+# import logging
+#
+#
+# def setup_logging():
+#     file_handler = logging.FileHandler('/home/alex/Documents/Projects/battleShip/env1/debug.log')
+#     formatted = logging.Formatter("[%(asctime)s] - %(levelname)s - %(message)s")
+#     file_handler.setFormatter(fmt=formatted)
+#     file_handler.setLevel(level=logging.DEBUG)
+#
+#     root_handler = logging.getLogger()
+#     root_handler.addHandler(hdlr=file_handler)
+#     root_handler.setLevel(level=logging.DEBUG)
 
 
 def main():
@@ -19,4 +31,5 @@ def main():
 
 
 if __name__ == '__main__':
+    # setup_logging()
     main()

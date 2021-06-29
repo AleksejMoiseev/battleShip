@@ -107,12 +107,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+DJANGO_LOG_LEVEL = DEBUG
+
+LOGGING_CONFIG = None
+
 # Настройки для логера на джанго конфигурация для вывода в файл
 # путь куда будут писаться логи
 # /home/alex/Documents/Projects/battleShip/env1/debug.log
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+            'verbose': {
+                'format': '{asctime} {levelname} {message}',
+                'style': '{',
+            },
+            'simple': {
+                'format': '{asctime} {levelname} {message}',
+                'style': '{',
+            },
+        },
     'handlers': {
         'file': {
             'level': 'DEBUG',
@@ -122,6 +137,11 @@ LOGGING = {
     },
     'loggers': {
         'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',  # уровень с которого нужно писать логи
+            'propagate': True,
+        },
+        'custom': {
             'handlers': ['file'],
             'level': 'DEBUG',  # уровень с которого нужно писать логи
             'propagate': True,

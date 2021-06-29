@@ -1,5 +1,6 @@
 import datetime
 import os
+import logging
 
 from django.http import *
 from django.shortcuts import render
@@ -13,11 +14,35 @@ T =os.path.dirname(__file__)  # показывает путь to parent director
 
 # Через хост прокидываем параметр в функцию параметр a: http://example.com:9000/test1/5/
 
+logger = logging.getLogger('custom')
+logger.setLevel(level=logging.DEBUG)
+
+log_handlers = {
+    "file_debug": logging.FileHandler('/home/alex/Documents/Projects/battleShip/env1/debug.log', mode="w"),
+    "file_info": logging.FileHandler('/home/alex/Documents/Projects/battleShip/env1/debug.log', mode="w"),
+}
+log_handlers["file_debug"].setLevel(logging.DEBUG)
+log_handlers["file_info"].setLevel(logging.INFO)
+
+log_formatters = {
+    "file_debug": logging.Formatter("[%(levelname)s]@[%(asctime)s]: %(message)s"),
+    "file_info": logging.Formatter("[%(levelname)s]@[%(asctime)s]: %(message)s"),
+}
+
+for k, v in log_formatters.items():
+    print(k, v)
+    log_handlers[k].setFormatter(v)
+
+logger.addHandler(log_handlers['file_debug'])
+logger.addHandler(log_handlers["file_info"])
+
 
 def test1(request, a):
     now = datetime.datetime.now()
-    print(a)  # Прокидывается в формате str
+    logger.debug(msg=f"date: {now}")
+    logger.debug(msg=f"parametr a = {a}")
     html_template = "<html><body><h1>Сейчас %s Прокинули через хост значение %s </h1> </body></html>" % (now, a)
+    logger.info(msg="end function {}".format('end'))
     return HttpResponse(html_template)
 
 
