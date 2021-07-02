@@ -1,7 +1,7 @@
 import datetime
 import os
 import logging
-
+from pathlib import Path
 from django.http import *
 from django.shortcuts import render
 from django.template import Template, Context, loader
@@ -11,15 +11,15 @@ from django.urls import reverse
 from .form import MyForm
 
 T =os.path.dirname(__file__)  # показывает путь to parent directory
-
+log = Path(__file__).resolve().parent.parent.parent.joinpath("debug.log")
 # Через хост прокидываем параметр в функцию параметр a: http://example.com:9000/test1/5/
 
 logger = logging.getLogger('custom')
 logger.setLevel(level=logging.DEBUG)
 
 log_handlers = {
-    "file_debug": logging.FileHandler('/home/alex/Documents/Projects/battleShip/env1/debug.log', mode="w"),
-    "file_info": logging.FileHandler('/home/alex/Documents/Projects/battleShip/env1/debug.log', mode="w"),
+    "file_debug": logging.FileHandler(log, mode="w"),
+    "file_info": logging.FileHandler(log, mode="w"),
 }
 log_handlers["file_debug"].setLevel(logging.DEBUG)
 log_handlers["file_info"].setLevel(logging.INFO)

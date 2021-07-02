@@ -3,4 +3,11 @@
 /env1/
 __pycache__/
 ../.idea/
+debug.log
+.idea/misc.xml
+.idea/myserver.iml
+/.idea/
+/mysite/mysite/__pycache__/
+
+
 
