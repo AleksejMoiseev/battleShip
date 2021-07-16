@@ -8,4 +8,5 @@ urlpatterns = [
     url(r"^test1/$", test1),
     url(r"^test2/$", test2),
     url(r"^test3/$", test3),
+    url(r"^hello_world/$", hello_world),
 ]

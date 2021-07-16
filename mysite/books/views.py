@@ -46,3 +46,7 @@ def test3(request):
     """
     print(request.session)
     return responce
+
+
+def hello_world(request):
+    return HttpResponse('<h1 style = "color:red">Hello World</h1>')
