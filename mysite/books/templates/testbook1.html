@@ -7,7 +7,12 @@
 <body>
 
 {% load book_tags %}
+{% load simple_tag %}
 {% now "jS F Y H:i" %}
+{% check_is_five 4 5 6 as tttt %}
+ {% if  tttt %}
+            <h2>Получено значение УРА!!!!!!!!!!!!</h2>
+        {% endif %}
 <h1>MOй шаблон {{ name|my_tag }}</h1>
 <h1>MOй шаблон {{ name|add_host }}</h1>
 </body>

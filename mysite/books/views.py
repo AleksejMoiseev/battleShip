@@ -2,9 +2,34 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import Template, Context, RequestContext, loader
 from django.template.loaders.filesystem import Loader
+from functools import wraps
+import time
 
 # Create your views here.
 from .shortcut import custom_context
+
+
+class measure_time:
+
+    def __init__(self, debug):
+        self.debug = debug
+
+    def __call__(self, my_func):
+        @wraps(my_func)
+        def inner(*args, **kwargs):
+            uuu = args[0].META
+            print("request", uuu)
+            start_time = time.time()
+            if self.debug:  # Используем аргумент декоратора
+                print(f"Функция начала свой бег: {start_time}")
+            result_my_func = my_func(*args, **kwargs)
+            end_time = time.time()
+            if self.debug:
+                print(f"Функция закончила бежать: {end_time}")
+            print(f" Итого бежала: {end_time - start_time}")
+            return result_my_func
+
+        return inner
 
 
 def test7(request):
@@ -48,5 +73,8 @@ def test3(request):
     return responce
 
 
+@measure_time(debug=True)
 def hello_world(request):
     return HttpResponse('<h1 style = "color:red">Hello World</h1>')
+
+

@@ -95,8 +95,25 @@ class ByToken(models.Model):
         (NOT_ACTIVE, 'rotten')
     ]
 
-    user = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        Publisher, on_delete=models.CASCADE,
+        related_name='token_user',
+        related_query_name='query_user'
+    )
+    """
+    related_query_name='query_user', пример запроса
+    Publisher.objects.filter(query_user__user=p1)
+    где р1 - это конкретный Publisher
+    related_name='token_user'
+    p1.token_user.all() где p1 - это экземпляр Publisher
+    """
     token_key = models.CharField(max_length=50)
     is_active = models.SmallIntegerField(choices=IS_ROTTEN, default=NOT_ACTIVE, verbose_name="Состояние")
     date_of_creation = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
+
+    def __repr__(self):
+        return f"{self.pk}-{self.user}-{self.token_key}"
+
+    def __str__(self):
+        return f"ByToken id {self.pk}-name{self.user}-{self.token_key}"

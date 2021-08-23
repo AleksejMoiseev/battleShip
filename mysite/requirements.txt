@@ -1,2 +1,5 @@
+requests==2.22.0
+Django==3.2.5
 pytest==6.2.4
-Django==3.2
+mysqlclient==2.0.1
+django-mysql==3.8.1
