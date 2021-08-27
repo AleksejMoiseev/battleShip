@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from my_server.views import pageNotFound
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('ajax.urls')),
     path('api/v1/ajax/', include('ajax.urls')),
 ]
+
+
+handler404 = pageNotFound

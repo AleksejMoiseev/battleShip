@@ -4,6 +4,7 @@ from django.template import Template, Context, RequestContext, loader
 from django.template.loaders.filesystem import Loader
 from functools import wraps
 import time
+from django.views.generic.base import View
 
 # Create your views here.
 from .shortcut import custom_context
@@ -76,5 +77,13 @@ def test3(request):
 @measure_time(debug=True)
 def hello_world(request):
     return HttpResponse('<h1 style = "color:red">Hello World</h1>')
+
+
+class TestView(View):
+
+    def get(self, request):
+        return HttpResponse('<h1 style = "color:red">Hello World</h1>')
+
+
 
 

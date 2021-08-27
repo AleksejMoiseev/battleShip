@@ -8,6 +8,7 @@ debug.log
 .idea/myserver.iml
 /.idea/
 /mysite/mysite/__pycache__/
+ db_django/
 
 
 

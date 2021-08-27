@@ -33,7 +33,7 @@
         {{ form.message }}
     </div>
 
-    {{ form.as_table }}
+<!--    {{ form.as_table }}-->
     <br>
     <input type="submit", value="PUSH">
 </form>
@@ -41,8 +41,9 @@
 
 <h1 class="h1">Это Моя новая переменная {{ my_value }}</h1>
 
+
 {% if form.errors %}
 <h2>ВНИМАНИЕ ОШИБКИ : {{ form.errors }}</h2>
 {% endif %}
-
+<a href="/new/register/">REGISTER</a>
 {% endblock %}

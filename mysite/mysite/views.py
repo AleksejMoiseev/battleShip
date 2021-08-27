@@ -7,7 +7,8 @@ from django.shortcuts import render
 from django.template import Template, Context, loader
 from django.template.loader import render_to_string
 from django.urls import reverse
-
+from rest_framework import status
+from .settings import MEDIA_ROOT
 from .form import MyForm
 
 T =os.path.dirname(__file__)  # показывает путь to parent directory
@@ -180,6 +181,7 @@ def test14(request, order):
 
 
 def test15(request):
+    print("!!!!!!", MEDIA_ROOT)
     t = Template("<html><body><h1>{{name}} </h1> </body></html>")
     context = Context({
         "name": "Alex",
@@ -190,3 +192,17 @@ def test15(request):
     # return HttpResponse("Необходимо авторизоваться",  status=401)
 
 
+def comment(request):
+    template_name = 'new/readmi.html'
+    template = loader.get_template(template_name=template_name)
+    context = locals()
+    html = template.render(context=context)
+    return HttpResponse(html)
+
+
+def pageNotFound(request, exception):
+    return render(request=request, template_name='error_404.html', status=status.HTTP_404_NOT_FOUND)
+
+
+def unauthorized_error(request, exception):
+    return render(request=request, template_name='error_401.html', status=status.HTTP_401_UNAUTHORIZED)

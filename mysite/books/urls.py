@@ -9,4 +9,5 @@ urlpatterns = [
     url(r"^test2/$", test2),
     url(r"^test3/$", test3),
     url(r"^hello_world/$", hello_world),
+    url(r"^register/$", TestView.as_view()),
 ]

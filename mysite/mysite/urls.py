@@ -13,11 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from .views import *
 from django.conf.urls import url
 from django.urls import include
+from mysite import settings
 
 
 
@@ -40,6 +42,9 @@ urlpatterns = [
     path('test2/<int:pk>/', offset),
     url(r'^test14/(?P<order>\[order]*)/', test14),
     url(r'^test15/', test15),
+    url(r'^test16/', comment),
+
+
 
     # url(r"^test11/(\d*)/(\d*)/$", test11), # Передача в функцию позиционных аргументов
 ]
@@ -47,4 +52,11 @@ urlpatterns = [
 urlpatterns += [
     url(r"^test11/(?P<year>\d*)/(?P<month>\d*)/$", test11), # передача в функцию именованных аргументов  year, month
 ]
+"""
+Раздача идет статитического контента в режиме отладки
+"""
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)
 
+handler404 = pageNotFound
+handler401 = unauthorized_error

@@ -9,13 +9,24 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Переменная которая показывает откуда берутся шаблоны
 TEMPLATE_DIR = BASE_DIR.joinpath('mysite/template/mysite') # показываем путь и закидываем его в templates_dir ниже
-# по умолчанию шаблоны ищутся в папке templates находящейся в приложении
+# по умолчанию шаблоны ищутся в папке template находящейся в приложении
+
+"""
+указываем где располагается папка  содержащая медиа ресурс
+"""
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+"""
+добавляет к урлам '/media/'
+"""
+MEDIA_URL = '/media/'
 
 
 
@@ -87,6 +98,39 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+"""
+Настройка DB MYSQL для запуска через  docker 
+коннектимся к db started in docker containers
+"""
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dj',
+#         'USER': 'root',
+#         'PASSWORD': 'secret',
+#         'HOST': '172.17.0.1',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3307',
+#     }
+# }
+
+"""
+Настройка БД для docker-compose 
+"""
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dj',
+#         'USER': 'alameda',
+#         'PASSWORD': 'secret',
+#         'HOST': 'db',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
+
 
 
 # Password validation
@@ -174,3 +218,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
