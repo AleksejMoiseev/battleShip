@@ -10,7 +10,7 @@ register = template.Library()  # регистрируем библиотеку �
 
 @register.filter
 def my_tag(value):
-    return value.lower()
+    return value.upper()
 
 
 @register.filter()
