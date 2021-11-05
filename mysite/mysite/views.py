@@ -1,6 +1,10 @@
 import datetime
+import decimal
+import functools
+import json
 import os
 import logging
+import uuid
 from pathlib import Path
 from django.http import *
 from django.shortcuts import render
@@ -13,6 +17,7 @@ from .form import MyForm
 
 T =os.path.dirname(__file__)  # показывает путь to parent directory
 log = Path(__file__).resolve().parent.parent.parent.joinpath("debug.log")
+print(log)
 # Через хост прокидываем параметр в функцию параметр a: http://example.com:9000/test1/5/
 
 logger = logging.getLogger('custom')
@@ -110,7 +115,22 @@ def test6(request):
     # return HttpResponseRedirect (reverse(test2))  # редиректит на  views c именем test2
     # return redirect(to='/test21/')  # редирект на путь '/test21/'
 
+INFINITY = float('infinity')
+from django.core.serializers.json import DjangoJSONEncoder
+def jsonify(v):
+    @functools.wraps(v)
+    def wrapper(*a, **kw):
+        r = v(*a, **kw)
+        if isinstance(r, HttpResponse):
+            return r
+        else:
+            return HttpResponse(json.dumps(r, cls=DjangoJSONEncoder),
+                                content_type="application/json")
 
+    return wrapper
+
+
+@jsonify
 def test7(request):
     t = Template("<html><body><h1>{{name}} </h1> </body></html>")
     context = Context({
@@ -121,7 +141,12 @@ def test7(request):
 
     # return HttpResponse("Необходимо авторизоваться",  status=401)
     # raise Http404("No MyModel matches the given query.")
-    return render(request=request, template_name='error_404.html', status=404)
+    # return render(request=request, template_name='error_404.html', status=404)
+    a = {
+        'a': 1111
+    }
+    data = a
+    return data
 
 
 def test8(request):
@@ -198,6 +223,21 @@ def comment(request):
     context = locals()
     html = template.render(context=context)
     return HttpResponse(html)
+
+from rest_framework.generics import ListAPIView
+from rest_framework.serializers import ModelSerializer
+from books.models import Student
+
+
+class StudentSerialis(ModelSerializer):
+    class Meta:
+        model = Student
+        fields = '__all__'
+
+
+class StudentListViews(ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerialis
 
 
 def pageNotFound(request, exception):

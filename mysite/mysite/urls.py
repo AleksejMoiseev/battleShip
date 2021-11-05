@@ -28,7 +28,7 @@ urlpatterns = [
     url(r"^test21/$", test2),
     path('admin/', admin.site.urls),
     path('test2/', test2, name='django_registration_activation_immediately'),
-    path('test3/', test3),
+    path('test3/', test3, name='test3'),
     path('new/', include('books.urls')), #  include помогает подключить все пути находящиеся в другом предсьавлении
     path('test4/', test4),
     path('test5/', test5),
@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^test14/(?P<order>\[order]*)/', test14),
     url(r'^test15/', test15),
     url(r'^test16/', comment),
+    url(r'^case/', StudentListViews.as_view(), name='case'),
 
 
 
